@@ -1,0 +1,57 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+{%block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>All Cafes</h1>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <strong><p>{{message}}</p></strong>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+  <!-- This is where you will write the code to render a Bootstrap
+  Table that contains all the information from the
+  cafe-data.csv file. -->
+  <table class="table table-dark">
+  <thead>
+    <tr>
+      {% for cafe in cafes[0] %}
+        <th scope="col">{{cafe}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for cafe in cafes[1:] %}
+    <tr>
+      {% for item in cafe %}
+        {% if cafe.index(item) == 1 %}
+          <td><a href="{{ item }}">Map Link</a></td>
+        {% else %}
+          <td>{{item}}</td>
+        {% endif %}
+      {% endfor %}
+
+    </tr>
+ {% endfor %}
+  </tbody>
+</table>
+
+
+      <p><a href="{{url_for('home')}}">Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
